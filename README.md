@@ -140,7 +140,8 @@ Process FCS files into a gating set, or process a GatingSet, compensating, trans
 `--gs=<gatingset>` optionally read from a GatingSet rather than FCS files. Can be combined with `--rscript`. GatingSet data are already compensated and transformed.
 
 
-
+## Missing Features?
+Open an issue, request a feature. 
 
 
 
