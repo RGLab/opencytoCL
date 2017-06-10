@@ -19,7 +19,9 @@ Currently openCyto command line tools work with Linux and Mac OS X
 
 OpenCyto command line tools expects well standardized and annotated data free of typos in keywords, markers and channels.
 
-If you get errors, your data likely has some problems. Open an issue, we'll help deal with it.
+## Errors? Bugs?
+
+Open an issue, provide a reproducible example.
 
 ## Install OpenCyto Command Line Tools
 
