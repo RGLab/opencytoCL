@@ -8,9 +8,20 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+# OpenCyto command line tools
+A thin wrapper around the opencyto  framework leveraging littler.
+
+Run simple flow cytometery processing tasks using opencyto from the command line.
+
 ## Notes
 
 Currently openCyto command line tools work with Linux and Mac OS X
+
+OpenCyto command line tools expects well standardized and annotated data free of typos in keywords, markers and channels.
+
+## Errors? Bugs? Feature Requrests?
+
+Open an issue, provide a reproducible example.
 
 ## Install OpenCyto Command Line Tools
 
