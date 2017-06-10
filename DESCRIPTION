@@ -1,0 +1,20 @@
+Package: openCytoCL
+Type: Package
+Title: A Command Line Interface to OpenCyto
+Version: 0.1.0
+Author: Greg Finak
+Maintainer: Greg Finak <gfinak@fhcrc.org>
+Description: A command-line interface to opencyto
+License: GPL3
+Encoding: UTF-8
+LazyData: true
+Depends: optparse,
+    openCyto,
+    flowWorkspace,
+    ncdfFlow,
+    flowCore,
+    ggcyto
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
