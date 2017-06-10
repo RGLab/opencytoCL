@@ -8,9 +8,16 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+# OpenCyto command line tools
+A thin wrapper around the opencyto  framework leveraging littler.
+
+Run simple flow cytometery processing tasks using opencyto from the command line.
+
 ## Notes
 
 Currently openCyto command line tools work with Linux and Mac OS X
+
+
 
 ## Install OpenCyto Command Line Tools
 
@@ -114,7 +121,8 @@ Gate a GatingSet using a template, saving the results. Optionally extract popula
 `--stats`  Extract population statistics and write them to a file.
 
 ### process
-
+Process FCS files into a gating set, or process a GatingSet, compensating, transforming. Optionally run user defined code.
+#### options
 `<fcs_read_from>` location of files to process
 
 `<save_to>` name of gating set to save to
@@ -126,6 +134,9 @@ Gate a GatingSet using a template, saving the results. Optionally extract popula
 `--rscript=<rscript>` if additional processing needs to be done, pass in an R script. The script can work with the GatingSet variable `gs`. It is run after `compensate` and `transform`.
 
 `--gs=<gatingset>` optionally read from a GatingSet rather than FCS files. Can be combined with `--rscript`. GatingSet data are already compensated and transformed.
+
+
+
 
 
 
