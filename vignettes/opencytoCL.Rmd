@@ -2,7 +2,9 @@
 title: "Using OpenCyto Command Line Tools"
 author: "Greg Finak"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+   rmarkdown::html_vignette:
+      toc: true
 vignette: >
   %\VignetteIndexEntry{Using OpenCytoCLI}
   %\VignetteEngine{knitr::rmarkdown}
@@ -103,6 +105,183 @@ Gate a GatingSet using a template, saving the results. Optionally extract popula
 
 `--gs=<gatingset>` optionally read from a GatingSet rather than FCS files. Can be combined with `--rscript`. GatingSet data are already compensated and transformed.
 
+# Examples
+
+Install `flowWorkspaceData` from BioConductor.
+
+```{r results="hide"}
+if(!library(flowWorkspaceData,logical.return = TRUE)){
+		source("https://bioconductor.org/biocLite.R")
+		biocLite("flowWorkspaceData")
+}
+```
+
+## Create a gating set from FCS files.
+
+```{r echo=FALSE,eval=TRUE,results="hide"}
+fcs_path = system.file(package="flowWorkspaceData","extdata")
+tmp = tempdir()
+try(file.remove(list.files("/tmp/cytotrol",full=TRUE)))
+try(file.remove("/tmp/cytotrol"))
+file.copy(list.files(path=fcs_path,pattern="CytoTrol.*",full=TRUE),to = tmp)
+```
+
+```{r, echo=FALSE, results='hide'}
+system(command=paste0("opencyto process ",tmp,"  /tmp/cytotrol --compensate --transform B710-A,R660-A,R780-A,V450-A,V545-A,G560-A,G780-A --annotate='$FIL'"))
+```
+
+Next, run command line opencyto to process FCS files into a compensated and transformed gatings set.
+
+```{sh eval=FALSE,echo=TRUE,results="hide"}
+opencyto process /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata /tmp/cytotrol_gatingset --compensate --transform --annotate="$FIL"
+```
+
+```{sh eval=FALSE}
+Loading opencyto.
+All FCS files have the same following channels:
+FSC-A
+FSC-H
+FSC-W
+SSC-A
+B710-A
+R660-A
+R780-A
+V450-A
+V545-A
+G560-A
+G780-A
+Time
+write CytoTrol_CytoTrol_1.fcs to empty cdf slot...
+write CytoTrol_CytoTrol_2.fcs to empty cdf slot...
+done!
+write CytoTrol_CytoTrol_1.fcs to empty cdf slot...
+write CytoTrol_CytoTrol_2.fcs to empty cdf slot...
+..done!
+Transforming B710-A R660-A R780-A V450-A V545-A G560-A G780-A
+saving ncdf...
+saving tree object...
+saving R object...
+Done
+To reload it, use 'load_gs' function
+
+Exiting.
+```
+
+Our gating set now lives at `/tmp/cytotrol`. 
+
+## Create a gating set from a FlowJo workspace file.
+
+```{r}
+manual_xml = list.files(fcs_path,pattern="manual.xml",full=TRUE)
+```
+
+The FlowJo xml file describing the manually gated data in `flowWorskpaceData` is at `r manual_xml`. We can parse it and extract cell population statistics.
+
+```{r,echo=FALSE,results="hide"}
+system(paste0("opencyto parse ",manual_xml))
+```
+
+```{r echo=FALSE,eval=TRUE,results="hide",error=FALSE,warning=FALSE}
+try(file.remove(list.files("/tmp/cytotrol_manual",full=TRUE)))
+try(file.remove("/tmp/cytotrol_manual"),silent=TRUE)
+```
+
+```{sh eval=FALSE}
+Loading opencyto.
+
+Found sample groups
+	 1. All Samples 
+	 2. B-cell 
+	 3. DC 
+	 4. T-cell 
+	 5. Thelper 
+	 6. Treg 
+Parse using:
+opencyto parse /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/manual.xml <read_from> <save_to> --group=<groupnumber>
+Workspace not parsed.
+```
+
+We see a number of sample groups. We'll load the T-cell group (4).
+
+```{r echo=FALSE,eval=TRUE,results="hide",error=FALSE,warning=FALSE}
+try(file.remove(list.files("/tmp/cytotrol_manual",full=TRUE)))
+try(file.remove("/tmp/cytotrol_manual"),silent=TRUE)
+```
+
+```{r echo=FALSE,results="hide"}
+file.remove(files = list.files(path = getwd(),pattern = "Rtmp.*\\.csv",full.names=TRUE))
+```
 
 
+```{r echo=TRUE,results="hide"}
+system(command=paste0("opencyto parse ",manual_xml," ",fcs_path,"  /tmp/cytotrol_manual --stats --group=4"))
+```
+
+```{sh ,eval=FALSE}
+Loading opencyto.
+
+Found sample groups
+	 1. All Samples 
+	 2. B-cell 
+	 3. DC 
+	 4. T-cell 
+	 5. Thelper 
+	 6. Treg 
+Parsing group 4 from
+/Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata
+Parsing 2 samples
+mac version of flowJo workspace recognized.
+Creating ncdfFlowSet...
+All FCS files have the same following channels:
+FSC-A
+FSC-H
+FSC-W
+SSC-A
+B710-A
+R660-A
+R780-A
+V450-A
+V545-A
+G560-A
+G780-A
+Time
+done!
+loading data: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/CytoTrol_CytoTrol_1.fcs
+Compensating
+gating ...
+write CytoTrol_CytoTrol_1.fcs_119531 to empty cdf slot...
+loading data: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/CytoTrol_CytoTrol_2.fcs
+Compensating
+gating ...
+write CytoTrol_CytoTrol_2.fcs_115728 to empty cdf slot...
+done!
+saving ncdf...
+saving tree object...
+saving R object...
+Done
+To reload it, use 'load_gs' function
+
+Done!
+Exiting.
+```
+
+The cell population statistics are stored in the local directory:
+
+```{r echo=FALSE}
+getwd()
+```
+
+```{r echo=FALSE}
+files = list.files(path = getwd(),pattern = "Rtmp.*\\.csv",full.names=TRUE)
+if(length(files)==1){
+	stats = data.table::fread(input = files)
+	head(stats)
+}
+```
+
+
+```{r echo=FALSE,results="hide"}
+#clean up afterwards
+file.remove(files = list.files(path = getwd(),pattern = "Rtmp.*\\.csv",full.names=TRUE))
+```
 

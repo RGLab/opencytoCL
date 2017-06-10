@@ -166,7 +166,8 @@ if(parsing_done){
  if((opt[["--stats"]])){
  	if(inherits(gs,"GatingSet")){
 	  stats = getPopStats(gs)
-	  write.csv(stats,file=file.path("./",paste0(basename(dirname(gs@data@file)),"_stats.csv")),row.names=FALSE)
+	  write.csv(stats,file=file.path(getwd(),paste0(basename(dirname(gs@data@file)),"_stats.csv")),row.names=FALSE)
+	  message("statistics written to ",file.path(getwd(),paste0(basename(dirname(gs@data@file)),"_stats.csv")))
  	}else{
  		message("Specify a gating set to load with\n opencyto load --gs=<gatingset> --stats")
  	}
@@ -215,6 +216,9 @@ if(opt[["process"]]) {
 				fromList = colnames(gs)[which(colnames(gs)%in%pars)]
 			}else{
 				fromList = colnames(gs)[which(grepl("FL",colnames(gs)))]
+				if(length(fromList)==0){
+					stop("Must specify parameters via --parameters option. \n The following parameters are found: ",paste(colnames(gs),collapse="\n"))
+				}
 			}
 			message("Transforming ", paste(fromList, collapse = " "))
 			trns = transformerList(from = fromList, trans = flowJo_biexp_trans())

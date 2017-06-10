@@ -12,7 +12,7 @@
 
 <meta name="author" content="Greg Finak" />
 
-<meta name="date" content="2017-06-09" />
+<meta name="date" content="2017-06-10" />
 
 <title>Using OpenCyto Command Line Tools</title>
 
@@ -70,13 +70,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Using OpenCyto Command Line Tools</h1>
 <h4 class="author"><em>Greg Finak</em></h4>
-<h4 class="date"><em>2017-06-09</em></h4>
+<h4 class="date"><em>2017-06-10</em></h4>
 
 
 
+<div id="opencyto-command-line-tools" class="section level1">
+<h1>OpenCyto command line tools</h1>
+<p>A thin wrapper around the opencyto framework leveraging littler.</p>
+<p>Run simple flow cytometery processing tasks using opencyto from the command line.</p>
 <div id="notes" class="section level2">
 <h2>Notes</h2>
 <p>Currently openCyto command line tools work with Linux and Mac OS X</p>
+<p>OpenCyto command line tools expects well standardized and annotated data free of typos in keywords, markers and channels.</p>
+</div>
+<div id="errors-bugs-feature-requrests" class="section level2">
+<h2>Errors? Bugs? Feature Requrests?</h2>
+<p>Open an issue, provide a reproducible example.</p>
 </div>
 <div id="install-opencyto-command-line-tools" class="section level2">
 <h2>Install OpenCyto Command Line Tools</h2>
@@ -99,7 +108,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2>Usage</h2>
 <p>For help, at the command prompt, type:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">opencyto</span> -h</code></pre></div>
-<pre><code>Usage: 
+<pre><code>Usage:
     opencyto parse &lt;workspace&gt; &lt;fcs_read_from&gt; &lt;save_to&gt; [--stats] --group=&lt;group_number&gt;  [--annotate=&lt;keywords&gt;]
     opencyto parse &lt;workspace&gt;
     opencyto load --gs=&lt;gatingset&gt; [--stats]
@@ -109,7 +118,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Commands:
     parse     Import a workspace and create a GatingSet.
     load      Load a workspace and print sample groups found therein. Optionally extract population statistics.
-    gate      Gate a workspace using a template, saving the results. Optionally extract population statistics. Existing gates are removed. 
+    gate      Gate a workspace using a template, saving the results. Optionally extract population statistics. Existing gates are removed.
     process   Process FCS files in to a GatingSet with optional compensation, transformation and custom processing.
 Arguments:
     &lt;workspace&gt;     The name of the workspace (wsp or xml format)
@@ -121,12 +130,12 @@ Options:
   --stats                    Save a csv of cell population statistics.
   --gs=&lt;gatingset&gt;           The name of the gating set.
   --template=&lt;template&gt;      The name of an openCyto csv gating template.
-  --compensate               Compensate using the spillover matrix from the FCS files. 
+  --compensate               Compensate using the spillover matrix from the FCS files.
   --transform                Transform using a default logicle / biexponential transform. By default it transforms all channels containing &quot;FL&quot;.
   --rscript=&lt;rscript&gt;        A custom R script to process a gating set (variable name `gs`). Run after compensate and transform.
   --annotate=&lt;keywords&gt;      Annotate a gating set with information extracted from keywords.
                              Keywords should be passed in as a comma separated list.
-                             If parsing FCS files, the keywords are taken from the FCS files. 
+                             If parsing FCS files, the keywords are taken from the FCS files.
                              If parsing a workspace, the keywords are taken from the workspace </code></pre>
 <div id="parse" class="section level3">
 <h3>parse</h3>
@@ -168,6 +177,17 @@ Options:
 <p><code>--rscript=&lt;rscript&gt;</code> if additional processing needs to be done, pass in an R script. The script can work with the GatingSet variable <code>gs</code>. It is run after <code>compensate</code> and <code>transform</code>.</p>
 <p><code>--gs=&lt;gatingset&gt;</code> optionally read from a GatingSet rather than FCS files. Can be combined with <code>--rscript</code>. GatingSet data are already compensated and transformed.</p>
 </div>
+</div>
+</div>
+<div id="examples" class="section level1">
+<h1>Examples</h1>
+<p>Install <code>flowWorkspaceData</code> from BioConductor.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if(!<span class="kw">library</span>(flowWorkspaceData,<span class="dt">logical.return =</span> <span class="ot">TRUE</span>)){
+        <span class="kw">source</span>(<span class="st">&quot;https://bioconductor.org/biocLite.R&quot;</span>)
+        <span class="kw">biocLite</span>(<span class="st">&quot;flowWorkspaceData&quot;</span>)
+}</code></pre></div>
+<pre><code>## [1] TRUE TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">opencyto</span> process /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata /tmp/cytotrol_gatingset --compensate --transform --annotate=<span class="st">&quot;</span><span class="ot">$FIL</span><span class="st">&quot;</span></code></pre></div>
 </div>
 
 
