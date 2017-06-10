@@ -2,10 +2,12 @@
 % Please edit documentation in R/install.R
 \name{install_openCytoCL}
 \alias{install_openCytoCL}
-\title{Install opencyto command line tools}
+\title{Install opencyto command line tools
+Supports linux and mac os X}
 \usage{
 install_openCytoCL(to = "/usr/local/bin")
 }
 \description{
 Install opencyto command line tools
+Supports linux and mac os X
 }

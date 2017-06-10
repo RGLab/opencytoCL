@@ -1,4 +1,5 @@
 #!/usr/local/bin/Rscript
+
 suppressPackageStartupMessages({opt_loaded = require(docopt)})
 if(!opt_loaded)
 	stop("You must install docopt.")
@@ -29,7 +30,7 @@ suppressWarnings({
 	return(toann)
 }
 
-usage = 'Usage: 
+usage = 'Usage:
 	opencyto parse <workspace> <fcs_read_from> <save_to> [--stats] --group=<group_number>  [--annotate=<keywords>]
 	opencyto parse <workspace>
 	opencyto load --gs=<gatingset> [--stats]
@@ -39,7 +40,7 @@ usage = 'Usage:
 Commands:
 	parse     Import a workspace and create a GatingSet.
 	load      Load a workspace and print sample groups found therein. Optionally extract population statistics.
-	gate      Gate a workspace using a template, saving the results. Optionally extract population statistics. Existing gates are removed. 
+	gate      Gate a workspace using a template, saving the results. Optionally extract population statistics. Existing gates are removed.
 	process   Process FCS files in to a GatingSet with optional compensation, transformation and custom processing.
 Arguments:
 	<workspace>     The name of the workspace (wsp or xml format)
@@ -51,12 +52,12 @@ Options:
   --stats                    Save a csv of cell population statistics.
   --gs=<gatingset>           The name of the gating set.
   --template=<template>      The name of an openCyto csv gating template.
-  --compensate               Compensate using the spillover matrix from the FCS files. 
+  --compensate               Compensate using the spillover matrix from the FCS files.
   --transform                Transform using a default logicle / biexponential transform. By default it transforms all channels containing "FL".
   --rscript=<rscript>        A custom R script to process a gating set (variable name `gs`). Run after compensate and transform.
   --annotate=<keywords>      Annotate a gating set with information extracted from keywords.
                              Keywords should be passed in as a comma separated list.
-                             If parsing FCS files, the keywords are taken from the FCS files. 
+                             If parsing FCS files, the keywords are taken from the FCS files.
                              If parsing a workspace, the keywords are taken from the workspace
 '
 
@@ -136,7 +137,7 @@ if((opt[["load"]])){
 		gs = load_gs(opt[["--gs"]])
 		parsing_done=TRUE
 	}else{
-		stop("gating set does not exist: ",opt[["--gs"]])		
+		stop("gating set does not exist: ",opt[["--gs"]])
 	}
 }
 
@@ -184,8 +185,8 @@ if(opt[["process"]]) {
 		if(!is.null(opt[["--rscript"]])){
 			if (!file.exists(opt[["--rscript"]])) {
 				stop("rscript ", opt[["--rscript"]], " not found.")
-			}	
-		} 
+			}
+		}
 		.load_opencyto()
 		files = list.files(path = opt[["fcs_read_from"]],
 								 pattern = "*\\.fcs$",
@@ -213,7 +214,7 @@ if(opt[["process"]]) {
 				pars = strsplit(pars,split = ",")[[1]]
 				fromList = colnames(gs)[which(colnames(gs)%in%pars)]
 			}else{
-				fromList = colnames(gs)[which(grepl("FL",colnames(gs)))]	
+				fromList = colnames(gs)[which(grepl("FL",colnames(gs)))]
 			}
 			message("Transforming ", paste(fromList, collapse = " "))
 			trns = transformerList(from = fromList, trans = flowJo_biexp_trans())
@@ -228,7 +229,7 @@ if(opt[["process"]]) {
 	}
 	if(!is.null(opt[["--rscript"]]))
 		source(opt[["--rscript"]])
-	
+
 	if(!is.null(opt[["--annotate"]])){
 		#Annotate with keywords from gating set
 		kwlist = .parseKeywordsArg(opt[["--annotate"]])
@@ -245,5 +246,5 @@ if(opt[["process"]]) {
 }
 
 message("Exiting.")
-q(save="no",status=0,)
+q(save="no",status=0)
 
