@@ -111,9 +111,7 @@
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>For help, at the command prompt, type:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">opencyto</span> -h</code></pre></div>
-<pre><code>Warning message:
-package ‘flowWorkspace’ was built under R version 3.4.1 
-Usage:
+<pre><code>Usage:
     opencyto parse &lt;workspace&gt; &lt;fcs_read_from&gt; &lt;save_to&gt; [--stats] --group=&lt;group_number&gt;  [--annotate=&lt;keywords&gt;]
     opencyto parse &lt;workspace&gt;
     opencyto load --gs=&lt;gatingset&gt; [--stats]
@@ -203,35 +201,35 @@ Options:
 <h2 class="hasAnchor">
 <a href="#create-a-gating-set-from-fcs-files-" class="anchor"></a>Create a gating set from FCS files.</h2>
 <p>Next, run command line opencyto to process FCS files into a compensated and transformed gatings set.</p>
-<pre class="sh"><code>opencyto process /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata /tmp/cytotrol_gatingset --compensate --transform --annotate="$FIL"</code></pre>
-<pre class="sh"><code>Loading opencyto.
-All FCS files have the same following channels:
-FSC-A
-FSC-H
-FSC-W
-SSC-A
-B710-A
-R660-A
-R780-A
-V450-A
-V545-A
-G560-A
-G780-A
-Time
-write CytoTrol_CytoTrol_1.fcs to empty cdf slot...
-write CytoTrol_CytoTrol_2.fcs to empty cdf slot...
-done!
-write CytoTrol_CytoTrol_1.fcs to empty cdf slot...
-write CytoTrol_CytoTrol_2.fcs to empty cdf slot...
-..done!
-Transforming B710-A R660-A R780-A V450-A V545-A G560-A G780-A
-saving ncdf...
-saving tree object...
-saving R object...
-Done
-To reload it, use 'load_gs' function
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">opencyto</span> process /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata /tmp/cytotrol_gatingset --compensate --transform --annotate=<span class="st">"</span><span class="ot">$FIL</span><span class="st">"</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">Loading</span> opencyto.
+<span class="kw">All</span> FCS files have the same following channels:
+<span class="kw">FSC-A</span>
+<span class="kw">FSC-H</span>
+<span class="kw">FSC-W</span>
+<span class="kw">SSC-A</span>
+<span class="kw">B710-A</span>
+<span class="kw">R660-A</span>
+<span class="kw">R780-A</span>
+<span class="kw">V450-A</span>
+<span class="kw">V545-A</span>
+<span class="kw">G560-A</span>
+<span class="kw">G780-A</span>
+<span class="kw">Time</span>
+<span class="kw">write</span> CytoTrol_CytoTrol_1.fcs to empty cdf slot...
+<span class="kw">write</span> CytoTrol_CytoTrol_2.fcs to empty cdf slot...
+<span class="kw">done</span>!
+<span class="kw">write</span> CytoTrol_CytoTrol_1.fcs to empty cdf slot...
+<span class="kw">write</span> CytoTrol_CytoTrol_2.fcs to empty cdf slot...
+<span class="kw">..done</span>!
+<span class="kw">Transforming</span> B710-A R660-A R780-A V450-A V545-A G560-A G780-A
+<span class="kw">saving</span> ncdf...
+<span class="kw">saving</span> tree object...
+<span class="kw">saving</span> R object...
+<span class="kw">Done</span>
+<span class="kw">To</span> reload it, use <span class="st">'load_gs'</span> function
 
-Exiting.</code></pre>
+<span class="kw">Exiting.</span></code></pre></div>
 <p>Our gating set now lives at <code>/tmp/cytotrol</code>.</p>
 </div>
 <div id="create-a-gating-set-from-a-flowjo-workspace-file-" class="section level2">
@@ -239,65 +237,65 @@ Exiting.</code></pre>
 <a href="#create-a-gating-set-from-a-flowjo-workspace-file-" class="anchor"></a>Create a gating set from a FlowJo workspace file.</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">manual_xml =<span class="st"> </span><span class="kw">list.files</span>(fcs_path,<span class="dt">pattern=</span><span class="st">"manual.xml"</span>,<span class="dt">full=</span><span class="ot">TRUE</span>)</code></pre></div>
 <p>The FlowJo xml file describing the manually gated data in <code>flowWorskpaceData</code> is at /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/manual.xml. We can parse it and extract cell population statistics.</p>
-<pre class="sh"><code>Loading opencyto.
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">Loading</span> opencyto.
 
-Found sample groups
-     1. All Samples 
-     2. B-cell 
-     3. DC 
-     4. T-cell 
-     5. Thelper 
-     6. Treg 
-Parse using:
-opencyto parse /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/manual.xml &lt;read_from&gt; &lt;save_to&gt; --group=&lt;groupnumber&gt;
-Workspace not parsed.</code></pre>
+<span class="kw">Found</span> sample groups
+     <span class="kw">1.</span> All Samples 
+     <span class="kw">2.</span> B-cell 
+     <span class="kw">3.</span> DC 
+     <span class="kw">4.</span> T-cell 
+     <span class="kw">5.</span> Thelper 
+     <span class="kw">6.</span> Treg 
+<span class="kw">Parse</span> using:
+<span class="kw">opencyto</span> parse /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/manual.xml <span class="kw">&lt;</span>read_from<span class="kw">&gt;</span> <span class="kw">&lt;</span>save_to<span class="kw">&gt;</span> --group=<span class="kw">&lt;</span>groupnumber<span class="kw">&gt;</span>
+<span class="kw">Workspace</span> not parsed.</code></pre></div>
 <p>We see a number of sample groups. We’ll load the T-cell group (4).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="dt">command=</span><span class="kw">paste0</span>(<span class="st">"opencyto parse "</span>,manual_xml,<span class="st">" "</span>,fcs_path,<span class="st">"  /tmp/cytotrol_manual --stats --group=4"</span>))</code></pre></div>
-<pre class="sh"><code>Loading opencyto.
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="kw">Loading</span> opencyto.
 
-Found sample groups
-     1. All Samples 
-     2. B-cell 
-     3. DC 
-     4. T-cell 
-     5. Thelper 
-     6. Treg 
-Parsing group 4 from
-/Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata
-Parsing 2 samples
-mac version of flowJo workspace recognized.
-Creating ncdfFlowSet...
-All FCS files have the same following channels:
-FSC-A
-FSC-H
-FSC-W
-SSC-A
-B710-A
-R660-A
-R780-A
-V450-A
-V545-A
-G560-A
-G780-A
-Time
-done!
-loading data: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/CytoTrol_CytoTrol_1.fcs
-Compensating
-gating ...
-write CytoTrol_CytoTrol_1.fcs_119531 to empty cdf slot...
-loading data: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/CytoTrol_CytoTrol_2.fcs
-Compensating
-gating ...
-write CytoTrol_CytoTrol_2.fcs_115728 to empty cdf slot...
-done!
-saving ncdf...
-saving tree object...
-saving R object...
-Done
-To reload it, use 'load_gs' function
+<span class="kw">Found</span> sample groups
+     <span class="kw">1.</span> All Samples 
+     <span class="kw">2.</span> B-cell 
+     <span class="kw">3.</span> DC 
+     <span class="kw">4.</span> T-cell 
+     <span class="kw">5.</span> Thelper 
+     <span class="kw">6.</span> Treg 
+<span class="kw">Parsing</span> group 4 from
+<span class="kw">/Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata</span>
+<span class="kw">Parsing</span> 2 samples
+<span class="kw">mac</span> version of flowJo workspace recognized.
+<span class="kw">Creating</span> ncdfFlowSet...
+<span class="kw">All</span> FCS files have the same following channels:
+<span class="kw">FSC-A</span>
+<span class="kw">FSC-H</span>
+<span class="kw">FSC-W</span>
+<span class="kw">SSC-A</span>
+<span class="kw">B710-A</span>
+<span class="kw">R660-A</span>
+<span class="kw">R780-A</span>
+<span class="kw">V450-A</span>
+<span class="kw">V545-A</span>
+<span class="kw">G560-A</span>
+<span class="kw">G780-A</span>
+<span class="kw">Time</span>
+<span class="kw">done</span>!
+<span class="kw">loading</span> data: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/CytoTrol_CytoTrol_1.fcs
+<span class="kw">Compensating</span>
+<span class="kw">gating</span> ...
+<span class="kw">write</span> CytoTrol_CytoTrol_1.fcs_119531 to empty cdf slot...
+<span class="kw">loading</span> data: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/flowWorkspaceData/extdata/CytoTrol_CytoTrol_2.fcs
+<span class="kw">Compensating</span>
+<span class="kw">gating</span> ...
+<span class="kw">write</span> CytoTrol_CytoTrol_2.fcs_115728 to empty cdf slot...
+<span class="kw">done</span>!
+<span class="kw">saving</span> ncdf...
+<span class="kw">saving</span> tree object...
+<span class="kw">saving</span> R object...
+<span class="kw">Done</span>
+<span class="kw">To</span> reload it, use <span class="st">'load_gs'</span> function
 
-Done!
-Exiting.</code></pre>
+<span class="kw">Done</span>!
+<span class="kw">Exiting.</span></code></pre></div>
 <p>The cell population statistics are stored in the local directory:</p>
 <pre><code>## [1] "/Users/gfinak/Dropbox (Gottardo Lab)/GoTeam/Projects/openCytoCL/docs/articles"</code></pre>
 <pre><code>##                              name  Population     Parent Count ParentCount
