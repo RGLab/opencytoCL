@@ -6,6 +6,8 @@ suppressPackageStartupMessages({opt_loaded = require(docopt)})
 if(!opt_loaded)
 	stop("You must install docopt.")
 
+suppressPackageStartupMessages({require(openCytoCL)})
+
 parsing_done=FALSE
 
 .load_opencyto = function(){
